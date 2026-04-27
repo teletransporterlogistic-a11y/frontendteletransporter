@@ -1,0 +1,127 @@
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Filtros superiores */
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filtros input[type="text"],
+.filtros select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-width: 180px;
+  font-size: 0.9rem;
+}
+
+.btn-excel {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #1f9d55;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-excel:hover {
+  background: #188445;
+}
+
+/* Tabla de clientes */
+
+.tabla-clientes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-clientes thead {
+  background: #f5f5f5;
+}
+
+.tabla-clientes th,
+.tabla-clientes td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tabla-clientes th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tabla-clientes tbody tr:hover {
+  background: #fafafa;
+}
+
+/* Botones pequeños en acciones */
+
+.btn-small {
+  display: inline-block;
+  padding: 4px 8px;
+  margin-right: 4px;
+  border-radius: 4px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-small:hover {
+  background: #0062cc;
+}
+
+.btn-small.btn-danger {
+  background: #dc3545;
+}
+
+.btn-small.btn-danger:hover {
+  background: #b52a36;
+}
+
+/* Paginación */
+
+.paginacion {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.paginacion button {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #f4f4f4;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.paginacion button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.paginacion span {
+  font-size: 0.85rem;
+}
