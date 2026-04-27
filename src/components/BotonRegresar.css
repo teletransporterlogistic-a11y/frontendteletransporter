@@ -1,0 +1,14 @@
+.btn-regresar {
+  background: #6c757d;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.btn-regresar:hover {
+  background: #5a6268;
+}
