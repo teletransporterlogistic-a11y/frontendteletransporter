@@ -1,0 +1,129 @@
+/* ================================
+   MEDIA CARTA HORIZONTAL REAL
+================================ */
+@page {
+  size: 8.5in 5.5in;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* CONTENEDOR REAL DE IMPRESIÓN */
+.cp-container {
+  width: 8.5in;
+  height: 5.5in;
+  padding: 0.25in 0.35in; /* margen interno mínimo */
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  background: white;
+
+  /* 🔥 ESTO ES LO QUE HACE QUE EMPIECE ARRIBA */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ================================
+   ENCABEZADO
+================================ */
+.cp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cp-logo {
+  width: 150px;
+}
+
+.cp-title-block {
+  text-align: center;
+  flex: 1;
+}
+
+.cp-title {
+  font-size: 22px;
+  margin: 0;
+}
+
+.cp-address {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.cp-guia-box {
+  text-align: right;
+  font-size: 14px;
+}
+
+/* ================================
+   REMITENTE + DESTINATARIO
+================================ */
+.cp-row {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.cp-box {
+  flex: 1;
+  border: 1px solid #000;
+  padding: 8px;
+  font-size: 13px;
+}
+
+.cp-box h3 {
+  margin: 0 0 4px 0;
+  border-bottom: 1px solid #000;
+  font-size: 14px;
+}
+
+/* ================================
+   SECCIONES
+================================ */
+.cp-section {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.cp-section h3 {
+  margin: 0 0 4px 0;
+  border-bottom: 1px solid #000;
+  font-size: 14px;
+}
+
+/* ================================
+   FIRMA
+================================ */
+.cp-firma {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.cp-firma-line {
+  margin-bottom: 4px;
+}
+
+/* ================================
+   IMPRESIÓN
+================================ */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+
+  .cp-container,
+  .cp-container * {
+    visibility: visible !important;
+  }
+
+  .cp-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
