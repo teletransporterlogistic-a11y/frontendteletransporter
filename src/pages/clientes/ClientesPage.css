@@ -1,0 +1,20 @@
+.vista-switch {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.vista-switch button {
+  padding: 8px 18px;
+  border: 1px solid #ccc;
+  background: #f4f4f4;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.vista-switch button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
