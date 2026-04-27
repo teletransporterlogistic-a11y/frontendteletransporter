@@ -1,0 +1,223 @@
+/* ============================
+   SIDEBAR PREMIUM UNIFICADO
+============================ */
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-strong);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  transition: width 0.25s ease, background 0.25s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 72px;
+}
+
+/* ============================
+   USER SECTION
+============================ */
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 6px 8px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.sidebar-user:hover {
+  background: var(--bg-card-hover);
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  margin-right: 10px;
+  border: 2px solid var(--btn-primary-bg);
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.status {
+  font-size: 11px;
+  color: #8be38b;
+}
+
+/* ============================
+   COLLAPSE BUTTON
+============================ */
+
+.collapse-btn {
+  width: 100%;
+  margin-bottom: 18px;
+  border: none;
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  padding: 7px 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.collapse-btn:hover {
+  background: var(--btn-secondary-bg-hover);
+  transform: translateY(-1px);
+}
+
+/* ============================
+   MENU
+============================ */
+
+.sidebar-menu {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ============================
+   MENU ITEM
+============================ */
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.sidebar-item:hover {
+  background: var(--sidebar-hover);
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.sidebar-item.active {
+  background: linear-gradient(90deg, var(--btn-primary-bg), #4b6fff);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(13, 138, 188, 0.4);
+}
+
+/* ============================
+   ICONS
+============================ */
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  font-size: 18px;
+}
+
+/* ============================
+   BADGES
+============================ */
+
+.badge {
+  margin-left: auto;
+  background: #ff4b6e;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* ============================
+   SUBMENÚS
+============================ */
+
+.accordion .chevron {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.sidebar-item.open .chevron {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  margin-left: 36px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  animation: fadeIn 0.25s ease;
+}
+
+.submenu-item {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 5px 0;
+  transition: color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.submenu-item:hover {
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.submenu-item.active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ============================
+   TOOLTIP (modo colapsado)
+============================ */
+
+.sidebar.collapsed .sidebar-item[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: fixed;
+  left: 72px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 9999;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  animation: fadeIn 0.15s ease;
+}
+
+/* ============================
+   ANIMACIONES
+============================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
