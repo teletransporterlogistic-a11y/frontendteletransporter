@@ -1,0 +1,1 @@
+import{a as e}from"./index-DpsNLYMc.js";const r={obtenerUnidades:async()=>e.get("/unidades"),crearUnidad:async a=>e.post("/unidades",a),actualizarUnidad:async(a,n)=>e.put(`/unidades/${a}`,n)};export{r as u};
