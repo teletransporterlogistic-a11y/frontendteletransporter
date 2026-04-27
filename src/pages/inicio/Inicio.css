@@ -1,0 +1,79 @@
+/* Fondo enterprise con gradiente sutil */
+.inicio-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  background: linear-gradient(
+    135deg,
+    #0f172a 0%,
+    #1e293b 40%,
+    #0f172a 100%
+  );
+
+  color: var(--text-primary);
+}
+
+/* Tarjeta premium */
+.inicio-card {
+  text-align: center;
+  padding: 50px 60px;
+  background: rgba(30, 41, 59, 0.85);
+  backdrop-filter: blur(8px);
+
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+
+  max-width: 520px;
+}
+
+/* Logo */
+.inicio-logo {
+  width: 160px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+}
+
+/* Títulos principales */
+.inicio-title {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+.inicio-subtitle-strong {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* Separador elegante */
+.inicio-divider {
+  width: 60%;
+  height: 2px;
+  background: var(--border-light);
+  margin: 20px auto;
+  border-radius: 2px;
+}
+
+/* Texto de bienvenida */
+.inicio-welcome {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+}
+
+.inicio-description {
+  font-size: 16px;
+  color: var(--text-secondary);
+}
