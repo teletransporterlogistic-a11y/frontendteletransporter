@@ -1,0 +1,1 @@
+import{j as e}from"./index-DpsNLYMc.js";function s(){return e.jsxs("div",{className:"module-page",children:[e.jsx("h1",{children:"Corte de Choferes"}),e.jsx("p",{children:"Módulo en construcción."})]})}export{s as default};
