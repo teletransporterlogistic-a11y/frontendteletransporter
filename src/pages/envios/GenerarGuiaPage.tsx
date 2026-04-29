@@ -1,72 +1,11 @@
-// src/pages/envios/GenerarGuiaPage.tsx
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "@/api/api";
+import api from "../../api/api";
 
-// ===============================
-// Tipos
-// ===============================
-interface Cliente {
-  nombre: string;
-  calle?: string;
-  numero?: string;
-  colonia?: string;
-  municipio?: string;
-  ciudad?: string;
-  estado?: string;
-  telefono?: string;
-  rfc?: string;
-}
-
-interface EnvioGuia {
-  id: number;
-  guia: string;
-
-  pago_destino: boolean;
-  fechaCreacion?: string;
-
-  cliente?: Cliente;
-
-  destinatarioNombre: string;
-  destinatarioCalle?: string;
-  destinatarioNumero?: string;
-  destinatarioColonia?: string;
-  destinatarioMunicipio?: string;
-  destinatarioCiudad: string;
-  destinatarioEstado: string;
-  destinatarioTelefono?: string;
-
-  cantidadPaquetes: number;
-  peso: number;
-  descripcionContenido?: string;
-  valorDeclarado?: number;
-
-  recoleccion?: boolean;
-  acuse?: boolean;
-  cobrese_o_devuelvase?: boolean;
-
-  costoTotal?: number;
-  descuento?: number;
-  subtotal?: number;
-  iva?: number;
-  retencionIVA?: boolean;
-  retencion?: number;
-  total?: number;
-
-  observaciones?: string;
-
-  qrBase64?: string;
-  barcodeBase64?: string;
-}
-
-// ===============================
-// Componente
-// ===============================
 export default function GenerarGuiaPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
   const navigate = useNavigate();
-
-  const [envio, setEnvio] = useState<EnvioGuia | null>(null);
+  const [envio, setEnvio] = useState(null);
 
   useEffect(() => {
     async function fetchEnvio() {
@@ -89,6 +28,7 @@ export default function GenerarGuiaPage() {
 
   return (
     <div className="guia-wrapper">
+
       <h2 className="guia-title">Guía generada correctamente</h2>
 
       <div className="guia-card">
@@ -109,7 +49,6 @@ export default function GenerarGuiaPage() {
             {envio.cliente?.calle} {envio.cliente?.numero}, Col.{" "}
             {envio.cliente?.colonia}
           </p>
-          <p>Municipio: {envio.cliente?.municipio ?? "N/A"}</p>
           <p>
             {envio.cliente?.ciudad}, {envio.cliente?.estado}
           </p>
@@ -125,7 +64,6 @@ export default function GenerarGuiaPage() {
             {envio.destinatarioCalle} #{envio.destinatarioNumero}, Col.{" "}
             {envio.destinatarioColonia}
           </p>
-          <p>Municipio: {envio.destinatarioMunicipio ?? "N/A"}</p>
           <p>
             {envio.destinatarioCiudad}, {envio.destinatarioEstado}
           </p>
@@ -147,13 +85,11 @@ export default function GenerarGuiaPage() {
           {envio.recoleccion && <p>• Recolección</p>}
           {envio.acuse && <p>• Acuse</p>}
           {envio.cobrese_o_devuelvase && <p>• Cóbrese o devuélvase</p>}
-          {envio.valorDeclarado && envio.valorDeclarado > 0 && <p>• Seguro</p>}
+          {envio.valorDeclarado > 0 && <p>• Seguro</p>}
           {!envio.recoleccion &&
             !envio.acuse &&
             !envio.cobrese_o_devuelvase &&
-            (!envio.valorDeclarado || envio.valorDeclarado === 0) && (
-              <p>Ninguno</p>
-            )}
+            envio.valorDeclarado === 0 && <p>Ninguno</p>}
         </div>
 
         {/* COSTOS */}
@@ -178,7 +114,10 @@ export default function GenerarGuiaPage() {
         {/* QR + BARCODE */}
         <div className="qr-section">
           {envio.qrBase64 && (
-            <img src={`data:image/png;base64,${envio.qrBase64}`} alt="QR" />
+            <img
+              src={`data:image/png;base64,${envio.qrBase64}`}
+              alt="QR"
+            />
           )}
 
           {envio.barcodeBase64 && (
@@ -198,6 +137,7 @@ export default function GenerarGuiaPage() {
             Acepto las condiciones estipuladas en la parte trasera de esta carta porte y/o solicitud de servicio
           </small>
         </div>
+
       </div>
 
       {/* BOTONES */}

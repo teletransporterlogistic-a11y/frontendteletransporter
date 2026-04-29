@@ -1,42 +1,25 @@
-// src/pages/almacen/AlmacenDashboardPage.tsx
 import { useState } from "react";
-
-import { useCentrosOperativos } from "@/hooks/centros/useCentrosOperativos";
+import { useCentrosOperativos } from "../../hooks/centros/useCentrosOperativos";
 import {
   useAlmacenKPIs,
   useProductividadOperadores,
-  useAlmacenHeatmap
-} from "@/hooks/almacen/useAlmacenDashboard";
+  useAlmacenHeatmap,
+} from "../../hooks/almacen/useAlmacenDashboard";
 
-import DashboardKPIs from "@/components/almacen/DashboardKPIs";
-import OperadoresProductividadTable from "@/components/almacen/OperadoresProductividadTable";
-import AlmacenHeatmap from "@/components/almacen/AlmacenHeatmap";
-
-// ===============================
-// Tipos
-// ===============================
-interface CentroOperativo {
-  id: number;
-  nombre: string;
-}
+import DashboardKPIs from "../../components/almacen/DashboardKPIs";
+import OperadoresProductividadTable from "../../components/almacen/OperadoresProductividadTable";
+import AlmacenHeatmap from "../../components/almacen/AlmacenHeatmap";
 
 export default function AlmacenDashboardPage() {
   const [centroOperativoId, setCentroOperativoId] = useState<number | undefined>(
     undefined
   );
 
-  // ===============================
-  // Hooks de datos
-  // ===============================
   const { data: centros } = useCentrosOperativos({ page: 1, pageSize: 999 });
-
   const { data: kpis } = useAlmacenKPIs(centroOperativoId);
   const { data: operadores } = useProductividadOperadores(centroOperativoId);
   const { data: heatmap } = useAlmacenHeatmap(centroOperativoId);
 
-  // ===============================
-  // Render
-  // ===============================
   return (
     <div className="almacen-dashboard-layout">
       <div className="header-row">
@@ -51,8 +34,7 @@ export default function AlmacenDashboardPage() {
           }
         >
           <option value="">Todos los centros</option>
-
-          {centros?.data?.map((c: CentroOperativo) => (
+          {centros?.data?.map((c) => (
             <option key={c.id} value={c.id}>
               {c.nombre}
             </option>
@@ -60,21 +42,18 @@ export default function AlmacenDashboardPage() {
         </select>
       </div>
 
-      {/* KPIs */}
-      <DashboardKPIs kpis={kpis ?? null} />
+      <DashboardKPIs kpis={kpis} />
 
       <div className="dashboard-grid">
-        {/* Productividad */}
         <div className="dashboard-left">
           <h2>Productividad por operador</h2>
-          <OperadoresProductividadTable operadores={operadores ?? []} />
+          <OperadoresProductividadTable operadores={operadores} />
         </div>
 
-        {/* Heatmap */}
         <div className="dashboard-right">
           <h2>Heatmap de actividad</h2>
           <div style={{ height: 400 }}>
-            <AlmacenHeatmap puntos={heatmap ?? []} />
+            <AlmacenHeatmap puntos={heatmap} />
           </div>
         </div>
       </div>

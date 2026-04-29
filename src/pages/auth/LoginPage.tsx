@@ -1,14 +1,12 @@
-// src/pages/auth/LoginPage.tsx
 import { useState } from "react";
-import { useLogin } from "@/hooks/auth/useLogin";
+import { useLogin } from "../../hooks/auth/useLogin";
 
 export default function LoginPage() {
   const login = useLogin();
+  const [email, setEmail] = useState("admin@teletransporter.com");
+  const [password, setPassword] = useState("admin123");
 
-  const [email, setEmail] = useState<string>("admin@teletransporter.com");
-  const [password, setPassword] = useState<string>("admin123");
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     login.mutate({ email, password });
   };
@@ -18,9 +16,7 @@ export default function LoginPage() {
       <h1>Login</h1>
 
       <input
-        type="email"
         placeholder="Email"
-        autoComplete="username"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -28,7 +24,6 @@ export default function LoginPage() {
       <input
         type="password"
         placeholder="Contraseña"
-        autoComplete="current-password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
@@ -37,9 +32,7 @@ export default function LoginPage() {
         {login.isPending ? "Ingresando..." : "Ingresar"}
       </button>
 
-      {login.isError && (
-        <div className="error">Credenciales inválidas</div>
-      )}
+      {login.isError && <div className="error">Credenciales inválidas</div>}
     </form>
   );
 }
