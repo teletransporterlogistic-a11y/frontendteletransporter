@@ -1,0 +1,115 @@
+/* ================================
+   MEDIA CARTA EXACTA
+=================================== */
+@page {
+  size: 8.5in 5.5in;
+  margin: 0.2in;
+}
+
+/* ================================
+   IMPRESIÓN REAL
+=================================== */
+@media print {
+
+  /* Ocultar TODO excepto la carta */
+  body * {
+    visibility: hidden !important;
+  }
+
+  .carta-container, 
+  .carta-container * {
+    visibility: visible !important;
+  }
+
+  /* Posicionar la carta arriba a la izquierda */
+  .carta-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8.1in;
+    padding: 0.2in;
+    margin: 0;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ================================
+   ESTILO EN PANTALLA
+=================================== */
+.carta-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.direccion {
+  text-align: center;
+  font-size: 9px;
+  margin-bottom: 10px;
+}
+
+/* ================================
+   DOS COLUMNAS
+=================================== */
+.fila-doble {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.columna {
+  width: 48%;
+  border: 1px solid #000;
+  padding: 6px 8px;
+  font-size: 10px;
+}
+
+.columna h3 {
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+/* ================================
+   BLOQUES RESTANTES
+=================================== */
+.bloque {
+  border: 1px solid #000;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  font-size: 10px;
+}
+
+.firma {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.btn-print {
+  margin-top: 12px;
+  padding: 6px 12px;
+  background: #ff6600;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

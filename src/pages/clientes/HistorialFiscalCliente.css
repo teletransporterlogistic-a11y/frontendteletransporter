@@ -1,0 +1,52 @@
+.historial-container {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cliente-info {
+  background: var(--card-bg, #fff);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.tabla-facturas {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg, #fff);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.tabla-facturas th {
+  background: var(--accent-color, #0a66c2);
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+.tabla-facturas td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.tabla-facturas tr:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.btn-primary {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-color, #0a66c2);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover, #084a8f);
+}
