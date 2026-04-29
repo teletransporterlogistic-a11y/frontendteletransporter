@@ -1,0 +1,40 @@
+Tipo
+Persona Moral
+Nombre
+MATERIALES PARA EMBRAGUES Y FRENOS VALLADOLID SA DE CV
+RFC
+MEF100212QX0
+Dirección principal
+Calle
+MATEO DE HIJAR Y ESPINOZA
+Número
+62
+Código Postal
+58295
+Colonia
+Ejidal Ocolusen
+Ciudad
+Morelia
+Estado
+Michoac n de Ocampo
+Municipio
+Morelia
+Contacto
+Celular *
+4432723918
+Teléfono 2
+4433301539
+Correo
+MEF@ENINFINITUM.COM
+Correo electrónico
+TUTRADESACV@GMAIL.COM
+Opciones fiscales
+Requiere factura
+Retención IVA
+Descuento (%)
+20
+Otros datos
+Datos adicionales
+Domicilios adicionales
+…
++ Agregar domicilioCrear Cliente
