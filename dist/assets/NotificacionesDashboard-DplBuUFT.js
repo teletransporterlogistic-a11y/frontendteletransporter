@@ -1,1 +1,0 @@
-import{j as s}from"./index-DpsNLYMc.js";function a(){return s.jsxs("div",{className:"p-6",children:[s.jsx("h1",{className:"text-2xl font-bold mb-4",children:"Notificaciones"}),s.jsx("div",{className:"bg-white shadow rounded-lg p-6",children:s.jsx("p",{className:"text-gray-700",children:"Aquí aparecerán las notificaciones del sistema."})})]})}export{a as default};

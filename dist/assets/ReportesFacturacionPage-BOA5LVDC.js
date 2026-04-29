@@ -1,1 +1,0 @@
-import{j as e}from"./index-B2pMYVwa.js";function s(){return e.jsxs("div",{className:"module-page",children:[e.jsx("h1",{children:"Reportes de Facturación"}),e.jsx("p",{children:"Módulo en construcción."})]})}export{s as default};

@@ -1,1 +1,0 @@
-import{a as n}from"./index-DpsNLYMc.js";async function a(e){return await n.get("/clientes",e)}async function c(e){return console.log("📤 Enviando cliente al backend:",e),await n.post("/clientes",e)}export{c,a as g};

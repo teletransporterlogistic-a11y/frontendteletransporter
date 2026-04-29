@@ -1,1 +1,0 @@
-import{j as a}from"./index-B2pMYVwa.js";function r(){return a.jsxs("div",{className:"p-6",children:[a.jsx("h1",{className:"text-2xl font-bold mb-2",children:"Asignación de Rutas"}),a.jsx("p",{className:"text-gray-600",children:"Módulo en construcción. Aquí podrás asignar rutas a operadores, ver su carga operativa y rentabilidad por ruta."})]})}export{r as default};

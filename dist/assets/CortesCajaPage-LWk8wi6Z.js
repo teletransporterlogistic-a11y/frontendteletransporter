@@ -1,1 +1,0 @@
-import{j as e}from"./index-DpsNLYMc.js";function r(){return e.jsxs("div",{className:"module-page",children:[e.jsx("h1",{children:"Cortes de Caja"}),e.jsx("p",{children:"Módulo en construcción."})]})}export{r as default};

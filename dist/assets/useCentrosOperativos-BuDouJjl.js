@@ -1,1 +1,0 @@
-import{u as r}from"./useQuery-CDyWR0f0.js";import{g as t}from"./centros-operativos.service-AI11qvzQ.js";function s(e){return r({queryKey:["centros-operativos",e],queryFn:()=>t(e),enabled:!!e.page&&!!e.pageSize,keepPreviousData:!0,staleTime:1e3*60})}export{s as u};

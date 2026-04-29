@@ -1,1 +1,0 @@
-import{a as n}from"./index-B2pMYVwa.js";async function c(){const{data:a}=await n.get("/pagos");return a}async function g(a){const{data:t}=await n.get(`/pagos/${a}`);return t}async function e(a){const{data:t}=await n.post("/pagos",a);return t}async function r(a,t){const{data:o}=await n.put(`/pagos/${a}`,t);return o}export{g as a,e as c,c as g,r as u};

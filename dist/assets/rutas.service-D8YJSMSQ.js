@@ -1,1 +1,0 @@
-import{a as n}from"./index-DpsNLYMc.js";async function r(){const{data:a}=await n.get("/rutas");return a}async function c(a){const{data:t}=await n.get(`/rutas/${a}`);return t}async function e(a){const{data:t}=await n.post("/rutas",a);return t}async function o(a,t){const{data:s}=await n.put(`/rutas/${a}`,t);return s}export{c as a,e as c,r as g,o as u};

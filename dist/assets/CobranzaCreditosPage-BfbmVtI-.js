@@ -1,1 +1,0 @@
-import{j as e}from"./index-BbMqsqt4.js";function s(){return e.jsxs("div",{className:"module-page",children:[e.jsx("h1",{children:"Cobranza de Créditos"}),e.jsx("p",{children:"Módulo en construcción."})]})}export{s as default};

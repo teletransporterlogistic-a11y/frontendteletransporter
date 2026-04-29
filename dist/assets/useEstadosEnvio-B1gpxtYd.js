@@ -1,1 +1,0 @@
-function n(){const e=[{value:"PENDIENTE",label:"Pendiente"},{value:"EN_RECOLECCION",label:"En recolección"},{value:"EN_TRANSITO",label:"En tránsito"},{value:"EN_REPARTO",label:"En reparto"},{value:"ENTREGADO",label:"Entregado"},{value:"INCIDENCIA",label:"Incidencia"}];return{estados:e,getLabel:l=>e.find(a=>a.value===l)?.label??l}}export{n as u};
