@@ -3,9 +3,6 @@ import api from "../api/api";
 import { ClienteFormData } from "../validation/cliente.schema";
 import { Cliente } from "../types/types";
 
-// ===============================
-// Tipos de respuesta
-// ===============================
 export interface ClientesResponse {
   data: Cliente[];
   meta: {
@@ -25,8 +22,8 @@ export async function getClientes(params: {
   search?: string;
   activo?: boolean;
 }): Promise<ClientesResponse> {
-  const res = await api.get("/clientes", params);
-  return res as ClientesResponse;
+  const res = await api.get("/clientes", { params });
+  return res.data;
 }
 
 // ===============================
@@ -34,7 +31,7 @@ export async function getClientes(params: {
 // ===============================
 export async function getCliente(id: number): Promise<Cliente> {
   const res = await api.get(`/clientes/${id}`);
-  return res as Cliente;
+  return res.data;
 }
 
 // ===============================
@@ -44,18 +41,15 @@ export async function createCliente(data: ClienteFormData): Promise<Cliente> {
   console.log("📤 Enviando cliente al backend:", data);
 
   const res = await api.post("/clientes", data);
-  return res as Cliente;
+  return res.data;
 }
 
 // ===============================
 // ACTUALIZAR CLIENTE
 // ===============================
-export async function updateCliente(
-  id: number,
-  data: ClienteFormData
-): Promise<Cliente> {
+export async function updateCliente(id: number, data: ClienteFormData): Promise<Cliente> {
   const res = await api.put(`/clientes/${id}`, data);
-  return res as Cliente;
+  return res.data;
 }
 
 // ===============================
