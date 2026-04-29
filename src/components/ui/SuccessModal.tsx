@@ -1,39 +1,21 @@
-// src/components/ui/SuccessModal.tsx
-import React from "react";
-
-interface Props {
-  open: boolean;
-  onClose: () => void;
-  message?: string;
-}
-
-export function SuccessModal({
-  open,
-  onClose,
-  message = "Operación realizada correctamente",
-}: Props) {
+export function SuccessModal({ open, onClose, message }) {
   if (!open) return null;
 
   return (
-    <div
-      className="modal-overlay"
-      role="alertdialog"
-      aria-modal="true"
-      onClick={onClose}
-    >
-      <div
-        className="modal-box modal-success"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="modal-icon-success">✓</div>
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-xl p-8 w-[380px] animate-fadeIn">
+        <div className="text-center">
+          <div className="text-green-600 text-6xl mb-4">✓</div>
+          <h2 className="text-xl font-semibold mb-2">¡Éxito!</h2>
+          <p className="text-gray-700 mb-6">{message}</p>
 
-        <h2 className="modal-title">¡Éxito!</h2>
-
-        {message && <p className="modal-message">{message}</p>}
-
-        <button className="btn-primary" onClick={onClose}>
-          Aceptar
-        </button>
+          <button
+            onClick={onClose}
+            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+          >
+            Aceptar
+          </button>
+        </div>
       </div>
     </div>
   );
