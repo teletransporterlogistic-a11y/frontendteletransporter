@@ -1,103 +1,135 @@
-// src/pages/flota/UnidadesList.tsx
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import unidadesService from "@/services/unidades.service";
+import { useState } from "react";
+import { useUnidades } from "../../hooks/unidades/useUnidades";
+import { Link } from "react-router-dom";
 
-// ===============================
-// Tipos
-// ===============================
-interface Unidad {
-  id: number;
-  unidadId: string;
-  nombre: string;
-  tipo: string;
-  estado: string;
-  kmAcumulados: number;
-  rendimientoKmL: number;
-}
-
-// ===============================
-// Componente
-// ===============================
 export default function UnidadesList() {
-  const [unidades, setUnidades] = useState<Unidad[]>([]);
-  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [pageSize] = useState(20);
+  const [search, setSearch] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [estado, setEstado] = useState("");
 
-  useEffect(() => {
-    cargarUnidades();
-  }, []);
-
-  async function cargarUnidades() {
-    try {
-      const res = await unidadesService.obtenerUnidades();
-
-      // Si tu servicio devuelve { data: [...] }
-      const lista = Array.isArray(res.data) ? res.data : [];
-
-      setUnidades(lista);
-    } catch (error) {
-      console.error("Error cargando unidades:", error);
-    }
-  }
+  const { data, isLoading } = useUnidades({
+    page,
+    pageSize,
+    search,
+    tipo,
+    estado,
+  });
 
   return (
-    <div className="page-container">
-      <div className="page-header">
-        <h2>Unidades</h2>
+    <div>
+      <h1>Unidades</h1>
 
-        <button
-          className="btn-primary"
-          onClick={() => navigate("/flota/unidades/nueva")}
+      {/* Filtros */}
+      <div className="filters">
+        <input
+          placeholder="Buscar unidad..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
+        />
+
+        <select
+          value={tipo}
+          onChange={(e) => {
+            setTipo(e.target.value);
+            setPage(1);
+          }}
         >
+          <option value="">Todos los tipos</option>
+          <option value="CAMIONETA">Camioneta</option>
+          <option value="CAMION">Camión</option>
+          <option value="MOTO">Moto</option>
+          <option value="TRACTO">Tracto</option>
+        </select>
+
+        <select
+          value={estado}
+          onChange={(e) => {
+            setEstado(e.target.value);
+            setPage(1);
+          }}
+        >
+          <option value="">Todos los estados</option>
+          <option value="ACTIVA">Activa</option>
+          <option value="INACTIVA">Inactiva</option>
+          <option value="MANTENIMIENTO">Mantenimiento</option>
+        </select>
+
+        <Link to="/unidades/nueva" className="btn-primary">
           Nueva Unidad
-        </button>
+        </Link>
       </div>
 
-      <div className="table-container">
+      {/* Tabla */}
+      {isLoading ? (
+        <div>Cargando...</div>
+      ) : (
         <table className="table">
           <thead>
             <tr>
-              <th>Unidad ID</th>
+              <th>ID Unidad</th>
               <th>Nombre</th>
               <th>Tipo</th>
               <th>Estado</th>
-              <th>KM Acumulados</th>
-              <th>Rendimiento (km/L)</th>
-              <th>Acciones</th>
+              <th>Km acumulados</th>
+              <th>Rendimiento</th>
+              <th>Último servicio</th>
+              <th>Próximo servicio</th>
+              <th></th>
             </tr>
           </thead>
 
           <tbody>
-            {unidades.map((u) => (
+            {data?.data.map((u) => (
               <tr key={u.id}>
                 <td>{u.unidadId}</td>
                 <td>{u.nombre}</td>
                 <td>{u.tipo}</td>
                 <td>{u.estado}</td>
-                <td>{u.kmAcumulados}</td>
-                <td>{u.rendimientoKmL}</td>
-
+                <td>{u.kmAcumulados.toLocaleString()}</td>
+                <td>{u.rendimientoKmL} km/L</td>
                 <td>
-                  <button
-                    className="btn-secondary"
-                    onClick={() => navigate(`/flota/unidades/editar/${u.id}`)}
-                  >
-                    Editar
-                  </button>
+                  {u.ultimoServicio
+                    ? new Date(u.ultimoServicio).toLocaleDateString()
+                    : "—"}
+                </td>
+                <td>
+                  {u.proximoServicio
+                    ? new Date(u.proximoServicio).toLocaleDateString()
+                    : "—"}
+                </td>
+                <td>
+                  <Link to={`/unidades/editar/${u.id}`}>Editar</Link>
                 </td>
               </tr>
             ))}
-
-            {unidades.length === 0 && (
-              <tr>
-                <td colSpan={7} style={{ textAlign: "center", padding: "20px" }}>
-                  No hay unidades registradas
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
-      </div>
+      )}
+
+      {/* Paginación */}
+      {data && (
+        <div className="pagination">
+          <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
+            Anterior
+          </button>
+
+          <span>
+            Página {data.meta.page} de {data.meta.totalPages}
+          </span>
+
+          <button
+            disabled={page === data.meta.totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
     </div>
   );
 }
