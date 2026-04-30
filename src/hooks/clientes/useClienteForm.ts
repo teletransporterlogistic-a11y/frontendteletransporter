@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { ClienteFormData } from "../../validation/cliente.schema";
+import { ClienteFormData, domicilioSchema } from "@/validation/cliente.schema";
+
+// Tipo del domicilio adicional
+type Domicilio = typeof domicilioSchema._type;
 
 export function useClienteForm() {
   const [form, setForm] = useState<ClienteFormData>({
@@ -9,7 +12,7 @@ export function useClienteForm() {
     calle: "",
     numero: "",
     codigoPostal: "",
-    colonias: "",
+    colonias: "",        // ✔ ahora string (correcto para <select>)
     ciudad: "",
     estado: "",
     municipio: "",
@@ -22,11 +25,15 @@ export function useClienteForm() {
     requiereFactura: false,
     retencionIVA: false,
     activo: true,
-    domicilios: [],
+    domicilios: [],      // ✔ array tipado
+    municipioId: null,   // ✔ agregado si tu backend lo usa
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // ===============================
+  // Actualizar campo simple
+  // ===============================
   function updateField<K extends keyof ClienteFormData>(
     field: K,
     value: ClienteFormData[K]
@@ -34,25 +41,34 @@ export function useClienteForm() {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
+  // ===============================
+  // Agregar domicilio adicional
+  // ===============================
   function addDomicilio() {
+    const empty: Domicilio = {
+      calle: "",
+      numero: "",
+      colonia: "",
+      codigoPostal: "",
+      ciudad: "",
+      estado: "",
+      municipio: "",
+    };
+
     setForm((prev) => ({
       ...prev,
-      domicilios: [
-        ...prev.domicilios,
-        {
-          calle: "",
-          numero: "",
-          colonia: "",
-          codigoPostal: "",
-          ciudad: "",
-          estado: "",
-          municipio: "",
-        },
-      ],
+      domicilios: [...prev.domicilios, empty],
     }));
   }
 
-  function updateDomicilio(index: number, field: string, value: string) {
+  // ===============================
+  // Actualizar domicilio adicional
+  // ===============================
+  function updateDomicilio<K extends keyof Domicilio>(
+    index: number,
+    field: K,
+    value: Domicilio[K]
+  ) {
     setForm((prev) => {
       const updated = [...prev.domicilios];
       updated[index] = { ...updated[index], [field]: value };
@@ -60,6 +76,9 @@ export function useClienteForm() {
     });
   }
 
+  // ===============================
+  // Eliminar domicilio adicional
+  // ===============================
   function removeDomicilio(index: number) {
     setForm((prev) => ({
       ...prev,
@@ -67,12 +86,18 @@ export function useClienteForm() {
     }));
   }
 
+  // ===============================
+  // Validación mínima (UI)
+  // ===============================
   function validate() {
     const newErrors: Record<string, string> = {};
 
     if (!form.nombre) newErrors.nombre = "El nombre es obligatorio";
     if (!form.celular) newErrors.celular = "El celular es obligatorio";
     if (!form.codigoPostal) newErrors.codigoPostal = "El CP es obligatorio";
+
+    // ✔ CORREGIDO: antes revisaba form.colonia (campo inexistente)
+    if (!form.colonias) newErrors.colonias = "La colonia es obligatoria";
 
     setErrors(newErrors);
 
