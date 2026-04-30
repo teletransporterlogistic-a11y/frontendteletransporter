@@ -5,7 +5,6 @@ import { DomiciliosAdicionales } from "../domicilios/DomiciliosAdicionales";
 export function ClienteForm({
   form,
   errors,
-  municipiosCP,
   updateField,
   addDomicilio,
   updateDomicilio,
@@ -14,12 +13,13 @@ export function ClienteForm({
 }) {
   const cpData = useCodigoPostal(form.codigoPostal);
 
-  // 🟩 FIX DEFINITIVO: solo actualizar cuando cambie el CP y existan datos válidos
+  // ===============================
+  // Autocompletar datos del CP
+  // ===============================
   useEffect(() => {
     if (!form.codigoPostal || form.codigoPostal.length !== 5) return;
     if (!cpData) return;
 
-    // Solo actualizar si hay cambios reales
     if (cpData.ciudad && cpData.ciudad !== form.ciudad) {
       updateField("ciudad", cpData.ciudad);
     }
@@ -37,9 +37,9 @@ export function ClienteForm({
     }
   }, [form.codigoPostal, cpData]);
 
-  const ciudadFinal = cpData.ciudad || form.ciudad;
-  const estadoFinal = cpData.estado || form.estado;
-  const municipioFinal = cpData.municipio || form.municipio;
+  const ciudadFinal = cpData?.ciudad || form.ciudad;
+  const estadoFinal = cpData?.estado || form.estado;
+  const municipioFinal = cpData?.municipio || form.municipio;
 
   return (
     <form className="card nuevo-cliente-card" onSubmit={onSubmit}>
@@ -66,6 +66,7 @@ export function ClienteForm({
             value={form.nombre}
             onChange={(e) => updateField("nombre", e.target.value)}
           />
+          {errors.nombre && <span className="error">{errors.nombre}</span>}
         </div>
 
         <div className="form-group">
@@ -107,11 +108,15 @@ export function ClienteForm({
             value={form.codigoPostal}
             onChange={(e) => updateField("codigoPostal", e.target.value)}
           />
+          {errors.codigoPostal && (
+            <span className="error">{errors.codigoPostal}</span>
+          )}
         </div>
 
         <div className="form-group">
           <label>Colonia</label>
-          {cpData.colonias?.length > 0 ? (
+
+          {cpData?.colonias?.length > 0 ? (
             <select
               name="colonias"
               value={form.colonias}
@@ -129,8 +134,12 @@ export function ClienteForm({
               name="colonias"
               value={form.colonias}
               onChange={(e) => updateField("colonias", e.target.value)}
-              placeholder="Selecciona la colonia"
+              placeholder="Escribe la colonia"
             />
+          )}
+
+          {errors.colonias && (
+            <span className="error">{errors.colonias}</span>
           )}
         </div>
 
@@ -139,7 +148,7 @@ export function ClienteForm({
           <input
             name="ciudad"
             value={ciudadFinal}
-            readOnly={!!cpData.ciudad}
+            readOnly={!!cpData?.ciudad}
             onChange={(e) => updateField("ciudad", e.target.value)}
           />
         </div>
@@ -149,7 +158,7 @@ export function ClienteForm({
           <input
             name="estado"
             value={estadoFinal}
-            readOnly={!!cpData.estado}
+            readOnly={!!cpData?.estado}
             onChange={(e) => updateField("estado", e.target.value)}
           />
         </div>
@@ -159,7 +168,7 @@ export function ClienteForm({
           <input
             name="municipio"
             value={municipioFinal}
-            readOnly={!!cpData.municipio}
+            readOnly={!!cpData?.municipio}
             onChange={(e) => updateField("municipio", e.target.value)}
           />
         </div>
@@ -179,6 +188,7 @@ export function ClienteForm({
             onChange={(e) => updateField("celular", e.target.value)}
             required
           />
+          {errors.celular && <span className="error">{errors.celular}</span>}
         </div>
 
         <div className="form-group">
@@ -263,11 +273,7 @@ export function ClienteForm({
         eliminar={() => {}}
       />
 
-      <button
-        type="button"
-        className="btn-secondary"
-        onClick={addDomicilio}
-      >
+      <button type="button" className="btn-secondary" onClick={addDomicilio}>
         + Agregar domicilio
       </button>
 

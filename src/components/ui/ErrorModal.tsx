@@ -1,4 +1,4 @@
-// src/components/ui/SuccessModal.tsx
+// src/components/ui/ErrorModal.tsx
 import React from "react";
 
 interface Props {
@@ -7,11 +7,7 @@ interface Props {
   message?: string;
 }
 
-export function SuccessModal({
-  open,
-  onClose,
-  message = "Operación realizada correctamente",
-}: Props) {
+export function ErrorModal({ open, onClose, message = "Ocurrió un error" }: Props) {
   if (!open) return null;
 
   return (
@@ -22,17 +18,17 @@ export function SuccessModal({
       onClick={onClose}
     >
       <div
-        className="modal-box modal-success"
+        className="modal-box modal-error"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal-icon-success">✓</div>
+        <div className="modal-icon-error">✕</div>
 
-        <h2 className="modal-title">¡Éxito!</h2>
+        <h2 className="modal-title">Error</h2>
 
         {message && <p className="modal-message">{message}</p>}
 
         <button className="btn-primary" onClick={onClose}>
-          Aceptar
+          Cerrar
         </button>
       </div>
     </div>
