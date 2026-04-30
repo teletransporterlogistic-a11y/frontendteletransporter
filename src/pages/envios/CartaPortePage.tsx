@@ -1,3 +1,4 @@
+// src/pages/envios/CartaPortePreview.jsx
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./CartaPortePreview.css";
@@ -10,17 +11,13 @@ export default function CartaPortePreview() {
   useEffect(() => {
     if (!envio) return;
 
-    // Ejecutar impresión una sola vez
     window.print();
 
-    // Preguntar una sola vez después de un pequeño delay
     const timer = setTimeout(() => {
       const ok = window.confirm("¿La Carta Porte se imprimió correctamente?");
       if (ok) {
         navigate("/envios/preview-recibo", { state: { envio } });
       }
-      // Si dice NO, simplemente no hacemos nada
-      // El usuario puede volver a imprimir manualmente
     }, 400);
 
     return () => clearTimeout(timer);
@@ -35,31 +32,37 @@ export default function CartaPortePreview() {
       <h2 className="title">Carta Porte</h2>
 
       <div className="carta-porte-card">
+        {/* ENCABEZADO */}
         <div className="cp-header">
           <div className="logo">Teletransporter</div>
           <div className="cp-guia">Guía: {envio.guia}</div>
         </div>
 
+        {/* REMITENTE */}
         <div className="cp-section">
           <h3>Remitente</h3>
           <p>{envio.cliente?.nombre}</p>
           <p>
             {envio.cliente?.calle} {envio.cliente?.numero},{" "}
-            {envio.cliente?.colonias}, {envio.cliente?.ciudad},{" "}
-            {envio.cliente?.estado}, CP {envio.cliente?.codigoPostal}
+            {envio.cliente?.colonia}, Municipio: {envio.cliente?.municipio ?? "N/A"},{" "}
+            {envio.cliente?.ciudad}, {envio.cliente?.estado},  
+            CP {envio.cliente?.codigoPostal}
           </p>
         </div>
 
+        {/* DESTINATARIO */}
         <div className="cp-section">
           <h3>Destinatario</h3>
           <p>{envio.destinatarioNombre}</p>
           <p>
             {envio.destinatarioCalle} {envio.destinatarioNumero},{" "}
-            {envio.destinatarioColonia}, {envio.destinatarioCiudad},{" "}
-            {envio.destinatarioEstado}, CP {envio.destinatarioCP}
+            {envio.destinatarioColonia}, Municipio: {envio.destinatarioMunicipio ?? "N/A"},{" "}
+            {envio.destinatarioCiudad}, {envio.destinatarioEstado},  
+            CP {envio.destinatarioCP}
           </p>
         </div>
 
+        {/* DATOS DEL ENVÍO */}
         <div className="cp-section">
           <h3>Datos del envío</h3>
           <p>Paquetes: {envio.cantidadPaquetes}</p>

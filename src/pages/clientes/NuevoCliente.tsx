@@ -1,18 +1,24 @@
-import { useCreateCliente } from "../../hooks/clientes/useCreateCliente";
-import { useClienteForm } from "../../hooks/clientes/useClienteForm";
-import { ClienteForm } from "../../components/clientes/ClienteForm"; // 👈 CORREGIDO
-import { SuccessModal } from "../../components/ui/SuccessModal";
-import { ErrorModal } from "../../components/ui/ErrorModal";
+// src/pages/clientes/NuevoCliente.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useCreateCliente } from "@/hooks/clientes/useCreateCliente";
+import { useClienteForm } from "@/hooks/clientes/useClienteForm";
+
+import { ClienteForm } from "@/components/clientes/ClienteForm";
+import { SuccessModal } from "@/components/ui/SuccessModal";
+import { ErrorModal } from "@/components/ui/ErrorModal";
+
+// ===============================
+// Componente
+// ===============================
 export default function NuevoCliente() {
   const navigate = useNavigate();
   const create = useCreateCliente();
 
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const {
     form,
@@ -21,10 +27,13 @@ export default function NuevoCliente() {
     validate,
     updateField,
     addDomicilio,
-    updateDomicilio,
+    updateDomicilio
   } = useClienteForm();
 
-  const onSubmit = (e) => {
+  // ===============================
+  // Submit
+  // ===============================
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validate()) return;
 
@@ -32,13 +41,16 @@ export default function NuevoCliente() {
       onSuccess: () => {
         setShowSuccess(true);
       },
-      onError: (err) => {
+      onError: (err: any) => {
         setErrorMsg(err?.message || "Ocurrió un error inesperado");
         setShowError(true);
-      },
+      }
     });
   };
 
+  // ===============================
+  // Modales
+  // ===============================
   const closeSuccess = () => {
     setShowSuccess(false);
     navigate("/clientes");
@@ -48,6 +60,9 @@ export default function NuevoCliente() {
     setShowError(false);
   };
 
+  // ===============================
+  // Render
+  // ===============================
   return (
     <>
       <ClienteForm

@@ -1,40 +1,76 @@
+// src/pages/clientes/ClientesList.tsx
 import { useEffect, useState } from "react";
-import api from "../../api/api";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import * as XLSX from "xlsx";
+import api from "@/api/api";
 import "./ClientesList.css";
 
+// ===============================
+// Tipos
+// ===============================
+export interface Cliente {
+  id: string;
+  codigo: string;
+  tipo: string;
+  nombre: string;
+  rfc?: string;
+  calle?: string;
+  numero?: string;
+  colonias?: string;
+  codigoPostal?: string;
+  ciudad?: string;
+  municipio?: string;
+  estado?: string;
+  celular?: string;
+  telefono2?: string;
+  correo?: string;
+  email?: string;
+  requiereFactura?: boolean;
+  retencionIVA?: boolean;
+  descuento?: number;
+  datosAdicionales?: string;
+  domicilios?: any[];
+}
+
 export default function ClientesList() {
-  const [clientes, setClientes] = useState<any[]>([]);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
   const [seleccionados, setSeleccionados] = useState<string[]>([]);
   const [filtro, setFiltro] = useState("");
   const [ciudad, setCiudad] = useState("");
   const [estado, setEstado] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [pagina, setPagina] = useState(1);
+
   const porPagina = 10;
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Detectar si estamos en modo selección
+  // ===============================
+  // Modo selección
+  // ===============================
   const selectMode =
     new URLSearchParams(location.search).get("selectMode") === "true";
 
   const fromEntrega = location.state?.fromEntrega || null;
 
+  // ===============================
+  // Cargar clientes
+  // ===============================
   useEffect(() => {
-    api.get("/clientes").then((res) => setClientes(res.data));
+    api.get("/clientes").then((res) => setClientes(res));
   }, []);
 
-  // -----------------------------
-  // FILTROS
-  // -----------------------------
+  // ===============================
+  // Filtros
+  // ===============================
   const filtrados = clientes.filter((c) => {
+    const texto = filtro.toLowerCase();
+
     return (
       (filtro === "" ||
-        c.nombre?.toLowerCase().includes(filtro.toLowerCase()) ||
-        c.rfc?.toLowerCase().includes(filtro.toLowerCase()) ||
+        c.nombre?.toLowerCase().includes(texto) ||
+        c.rfc?.toLowerCase().includes(texto) ||
         c.celular?.includes(filtro)) &&
       (ciudad === "" || c.ciudad === ciudad) &&
       (estado === "" || c.estado === estado) &&
@@ -42,16 +78,16 @@ export default function ClientesList() {
     );
   });
 
-  // -----------------------------
-  // PAGINACIÓN
-  // -----------------------------
+  // ===============================
+  // Paginación
+  // ===============================
   const totalPaginas = Math.ceil(filtrados.length / porPagina);
   const inicio = (pagina - 1) * porPagina;
   const visibles = filtrados.slice(inicio, inicio + porPagina);
 
-  // -----------------------------
-  // EXPORTAR EXCEL
-  // -----------------------------
+  // ===============================
+  // Exportar Excel
+  // ===============================
   function exportarExcel() {
     const hoja = XLSX.utils.json_to_sheet(clientes);
     const libro = XLSX.utils.book_new();
@@ -59,9 +95,9 @@ export default function ClientesList() {
     XLSX.writeFile(libro, "clientes.xlsx");
   }
 
-  // -----------------------------
-  // SELECCIÓN DE CLIENTES
-  // -----------------------------
+  // ===============================
+  // Selección múltiple
+  // ===============================
   function toggleSeleccion(id: string) {
     setSeleccionados((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
@@ -76,9 +112,9 @@ export default function ClientesList() {
     }
   }
 
-  // -----------------------------
-  // ACCIONES MASIVAS
-  // -----------------------------
+  // ===============================
+  // Acciones masivas
+  // ===============================
   function editarSeleccionado() {
     if (seleccionados.length === 1) {
       navigate(`/clientes/editar/${seleccionados[0]}`);
@@ -95,32 +131,29 @@ export default function ClientesList() {
     }
   }
 
-  // -----------------------------
-  // SELECCIONAR CLIENTE PARA ENTREGA
-  // -----------------------------
-  function seleccionarCliente(c: any) {
+  // ===============================
+  // Seleccionar cliente para entrega
+  // ===============================
+  function seleccionarCliente(c: Cliente) {
     if (fromEntrega) {
       navigate(`/entregas/${fromEntrega}`, {
-        state: {
-          clienteSeleccionado: c,
-        },
+        state: { clienteSeleccionado: c }
       });
     } else {
       navigate(-1, {
-        state: {
-          clienteSeleccionado: c,
-        },
+        state: { clienteSeleccionado: c }
       });
     }
   }
 
+  // ===============================
+  // Render
+  // ===============================
   return (
     <div className="card">
-      <h2>
-        {selectMode ? "Seleccionar cliente" : "Clientes"}
-      </h2>
+      <h2>{selectMode ? "Seleccionar cliente" : "Clientes"}</h2>
 
-      {/* ACCIONES MASIVAS (solo modo normal) */}
+      {/* Acciones masivas */}
       {!selectMode && (
         <div className="acciones-masivas">
           <button
@@ -141,7 +174,7 @@ export default function ClientesList() {
         </div>
       )}
 
-      {/* FILTROS */}
+      {/* Filtros */}
       <div className="filtros">
         <input
           type="text"
@@ -152,23 +185,23 @@ export default function ClientesList() {
 
         <select value={ciudad} onChange={(e) => setCiudad(e.target.value)}>
           <option value="">Ciudad</option>
-          {[...new Set(clientes.map((c) => c.ciudad))].map((c) => (
-            <option key={c}>{c}</option>
-          ))}
+          {[...new Set(clientes.map((c) => c.ciudad))].map(
+            (c) => c && <option key={c}>{c}</option>
+          )}
         </select>
 
         <select value={municipio} onChange={(e) => setMunicipio(e.target.value)}>
           <option value="">Municipio</option>
-          {[...new Set(clientes.map((c) => c.municipio))].map((m) => (
-            <option key={m}>{m}</option>
-          ))}
+          {[...new Set(clientes.map((c) => c.municipio))].map(
+            (m) => m && <option key={m}>{m}</option>
+          )}
         </select>
 
         <select value={estado} onChange={(e) => setEstado(e.target.value)}>
           <option value="">Estado</option>
-          {[...new Set(clientes.map((c) => c.estado))].map((e) => (
-            <option key={e}>{e}</option>
-          ))}
+          {[...new Set(clientes.map((c) => c.estado))].map(
+            (e) => e && <option key={e}>{e}</option>
+          )}
         </select>
 
         {!selectMode && (
@@ -178,7 +211,7 @@ export default function ClientesList() {
         )}
       </div>
 
-      {/* TABLA */}
+      {/* Tabla */}
       <table className="tabla-clientes">
         <thead>
           <tr>
@@ -285,7 +318,7 @@ export default function ClientesList() {
         </tbody>
       </table>
 
-      {/* PAGINACIÓN */}
+      {/* Paginación */}
       <div className="paginacion">
         <button disabled={pagina === 1} onClick={() => setPagina(pagina - 1)}>
           Anterior

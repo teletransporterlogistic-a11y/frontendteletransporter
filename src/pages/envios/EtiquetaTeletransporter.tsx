@@ -91,7 +91,6 @@ export default function EtiquetaTeletransporter() {
 
   return (
     <div className="etiqueta-container">
-
       {/* ENCABEZADO */}
       <div className="header-row">
         <img src={logo} className="logo-img" />

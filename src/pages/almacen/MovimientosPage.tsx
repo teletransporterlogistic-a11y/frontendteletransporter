@@ -1,13 +1,27 @@
+// src/pages/almacen/MovimientosPage.tsx
 import { useParams } from "react-router-dom";
-import { useMovimientos } from "../../hooks/almacen/useMovimientos";
+import { useMovimientos } from "@/hooks/almacen/useMovimientos";
 
-import MovimientosKPIs from "../../components/almacen/MovimientosKPIs";
-import MovimientosTimeline from "../../components/almacen/MovimientosTimeline";
-import MovimientosTable from "../../components/almacen/MovimientosTable";
+import MovimientosKPIs from "@/components/almacen/MovimientosKPIs";
+import MovimientosTimeline from "@/components/almacen/MovimientosTimeline";
+import MovimientosTable from "@/components/almacen/MovimientosTable";
+
+// ===============================
+// Tipos
+// ===============================
+interface RouteParams {
+  envioId?: string;
+}
 
 export default function MovimientosPage() {
-  const { envioId } = useParams();
+  const { envioId } = useParams<RouteParams>();
+
   const id = Number(envioId);
+
+  // Si el ID no es válido, mostramos error
+  if (!envioId || Number.isNaN(id)) {
+    return <div>Error: ID de envío inválido</div>;
+  }
 
   const { data: movimientos, isLoading } = useMovimientos(id);
 
