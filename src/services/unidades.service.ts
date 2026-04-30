@@ -1,45 +1,55 @@
-import api from "../api/api";
+// src/services/unidades.service.ts
+import api from "@/api/api";
 
-export interface UnidadesResponse {
-  data: any[];
-  total: number;
+// ===============================
+// Tipos
+// ===============================
+export interface Unidad {
+  id: number;
+  unidadId: string;
+  nombre: string;
+  tipo: string;
+  estado: string;
+  kmAcumulados: number;
+  rendimientoKmL?: number;
+  ultimoServicio?: string;
+  proximoServicio?: string;
+  actualizadoEn?: string;
+  [key: string]: unknown;
 }
 
+export interface CrearUnidadDTO {
+  unidadId: string;
+  nombre: string;
+  tipo: string;
+  estado: string;
+  kmAcumulados: number;
+  rendimientoKmL?: number;
+}
+
+export interface ActualizarUnidadDTO extends Partial<CrearUnidadDTO> {}
+
+// ===============================
+// Servicio principal
+// ===============================
 const unidadesService = {
-  getUnidades: async (params: any): Promise<UnidadesResponse> => {
-    const res = await api.get("/unidades", { params });
-    return res.data;
+  // Obtener todas las unidades
+  obtenerUnidades: async (): Promise<Unidad[]> => {
+    return api.get("/unidades");
   },
 
-  getUnidad: async (id: number) => {
-    const res = await api.get(`/unidades/${id}`);
-    return res.data;
+  // Crear unidad
+  crearUnidad: async (data: CrearUnidadDTO): Promise<Unidad> => {
+    return api.post("/unidades", data);
   },
 
-  createUnidad: async (data: any) => {
-    const res = await api.post("/unidades", data);
-    return res.data;
-  },
-
-  updateUnidad: async (id: number, data: any) => {
-    const res = await api.put(`/unidades/${id}`, data);
-    return res.data;
-  },
-
-  deleteUnidad: async (id: number) => {
-    const res = await api.delete(`/unidades/${id}`);
-    return res.data;
-  },
-
-  getMantenimientos: async (id: number) => {
-    const res = await api.get(`/unidades/${id}/mantenimientos`);
-    return res.data;
-  },
-
-  createMantenimiento: async (id: number, data: any) => {
-    const res = await api.post(`/unidades/${id}/mantenimientos`, data);
-    return res.data;
-  },
+  // Actualizar unidad
+  actualizarUnidad: async (
+    id: number,
+    data: ActualizarUnidadDTO
+  ): Promise<Unidad> => {
+    return api.put(`/unidades/${id}`, data);
+  }
 };
 
 export default unidadesService;
